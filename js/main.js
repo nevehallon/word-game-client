@@ -215,6 +215,7 @@ let serverCheck = async () => {
     serverCheck();
   }, 1500);
 };
+serverCheck();
 generateRemainder(bag);
 function pcSwap() {
   //? .sort((a,b) => b > a ? -1 : 1).filter(x => x !== 0) //for sorting by point value and removing blank tiles
