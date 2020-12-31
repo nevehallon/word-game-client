@@ -8,7 +8,7 @@ async function getWordTrieStr() {
     }
     let {
       data: { wordTrieStr, reverseWordTrieStr },
-    } = await axios.get(`https://word-game-js-server.herokuapp.com//wordTrieStr`);
+    } = await axios.get(`https://word-game-js-server.herokuapp.com/wordTrieStr`);
     let localTrieStr = wordTrieStr;
     let localReverseTrieStr = reverseWordTrieStr;
     await localforage.setItem("wordTrieStr", localTrieStr);
