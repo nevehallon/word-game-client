@@ -3,9 +3,7 @@ import { getTrie } from "../src/trie-prefix-tree/index.js";
 
 async function checkServerStatus() {
   try {
-    let {
-      data: { status },
-    } = await axios.get(`https://word-game-js-server.herokuapp.com/wordFinder?letters=aa&numBlanks=0`);
+    let { status } = await axios.get(`https://word-game-js-server.herokuapp.com/wordFinder?letters=aa&numBlanks=0`);
 
     if (status === "200") {
       return true;
