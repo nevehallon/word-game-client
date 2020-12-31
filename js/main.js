@@ -9,7 +9,7 @@ import { generateOptions } from "./blankOptions.js";
 import { generateRemainder } from "./remainingLetters.js";
 import toggleModal from "./modal.js";
 import letters from "./scrabbleLetters.js";
-import { getWordTrieStr } from "./getRequests.js";
+import { getWordTrieStr, checkServerStatus } from "./getRequests.js";
 import { calcPcMove } from "./compute.js";
 import { gridState, updateGameState, cleanTheGrid } from "./createGrid.js";
 import validate from "./boardValidator.js";
@@ -206,7 +206,15 @@ function zoomOut() {
   isZoomed = false;
 }
 
-startGame();
+let serverCheck = async () => {
+  let status = await checkServerStatus();
+  if (status) {
+    return startGame();
+  }
+  setTimeout(() => {
+    serverCheck();
+  }, 1500);
+};
 generateRemainder(bag);
 function pcSwap() {
   //? .sort((a,b) => b > a ? -1 : 1).filter(x => x !== 0) //for sorting by point value and removing blank tiles

@@ -1,6 +1,22 @@
 import letters from "./letterToPoints.js";
 import { getTrie } from "../src/trie-prefix-tree/index.js";
 
+async function checkServerStatus() {
+  try {
+    let {
+      data: { status },
+    } = await axios.get(`https://word-game-js-server.herokuapp.com/wordFinder?letters=aa&numBlanks=0`);
+
+    if (status === 200) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
 async function getWordTrieStr() {
   try {
     if ((await localforage.getItem("wordTrieStr")) && (await localforage.getItem("reverseWordTrieStr"))) {
@@ -46,4 +62,4 @@ async function getWordValues(str, numBlanks = 0) {
   }
 }
 
-export { getWordTrieStr, getWordValues };
+export { getWordTrieStr, getWordValues, checkServerStatus };
