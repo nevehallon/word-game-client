@@ -8,7 +8,7 @@ async function getWordTrieStr() {
     }
     let {
       data: { wordTrieStr, reverseWordTrieStr },
-    } = await axios.get(`http://localhost:3000/wordTrieStr`);
+    } = await axios.get(`https://word-game-js-server.herokuapp.com//wordTrieStr`);
     let localTrieStr = wordTrieStr;
     let localReverseTrieStr = reverseWordTrieStr;
     await localforage.setItem("wordTrieStr", localTrieStr);
@@ -25,7 +25,9 @@ async function getWordValues(str, numBlanks = 0) {
   try {
     let {
       data: { wordsFound },
-    } = await await axios.get(`http://localhost:3000/wordFinder?letters=${str}&numBlanks=${numBlanks}`);
+    } = await await axios.get(
+      `https://word-game-js-server.herokuapp.com/wordFinder?letters=${str}&numBlanks=${numBlanks}`
+    );
 
     wordsFound.forEach((word) => {
       result.push({
