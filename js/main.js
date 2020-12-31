@@ -420,7 +420,9 @@ function swap() {
     $(`#rack`).empty();
     newRack.forEach((x) => {
       $(`#rack`).append(`
-      <div data-drag=${x.drag} class="tile hot">${x.letter}<div>${x.points ? x.points : ""}</div></div>
+      <div data-drag=${x.drag} class="tile hot ${x.points ? "" : "blank"}">${x.letter}<div>${
+        x.points ? x.points : ""
+      }</div></div>
       `);
       setDraggable($(`[data-drag="${x.drag}"]`));
       e.stopImmediatePropagation();
@@ -593,7 +595,9 @@ function play(isAI = false) {
       if (bag.length) {
         let { letter, points } = _.pullAt(bag, [0])[0];
         $(`#rack`).append(`
-    <div data-drag=${++lettersUsed} class="tile hot">${letter}<div>${points ? points : ""}</div></div>
+    <div data-drag=${++lettersUsed} class="tile hot ${points ? "" : "blank"}">${letter}<div>${
+          points ? points : ""
+        }</div></div>
     `);
         setDraggable($(`[data-drag="${lettersUsed}"]`));
       }
