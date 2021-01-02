@@ -30,6 +30,7 @@ function isNot() {
 }
 
 function playError() {
+  if ($("#passPlay").text() === "Pass") return;
   $("#passPlay").text("Play X").attr("class", "btn btn-danger");
 }
 
