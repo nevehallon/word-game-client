@@ -30,8 +30,10 @@ function isNot() {
 }
 
 function playError() {
-  if ($("#passPlay").text() === "Pass") return;
-  $("#passPlay").text("Play X").attr("class", "btn btn-danger");
+  setTimeout(() => {
+    if ($("#passPlay").text() === "Pass") return;
+    $("#passPlay").text("Play X").attr("class", "btn btn-danger");
+  }, 0);
 }
 
 function validate(gridState, firstTurn, wordsLogged, isPlayer) {
