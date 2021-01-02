@@ -578,6 +578,7 @@ function play(isAI = false) {
   if (playersTurn) {
     playerScore += isValidMove.pointTally;
     $("#playerScore").text(playerScore);
+
     history.push({
       isAI: false,
       word: isValidMove.bestWord.join(", "),
