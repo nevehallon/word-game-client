@@ -25,7 +25,7 @@ function isHot() {
 }
 
 function isNot() {
-  $("#passPlay").text("Pass");
+  $("#passPlay").text("Pass").attr("class", "btn btn-primary");
   $("#swapRecall").text("Swap");
 }
 
