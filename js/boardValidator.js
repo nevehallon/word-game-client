@@ -57,7 +57,7 @@ function validate(gridState, firstTurn, wordsLogged, isPlayer) {
 
           if (index === 0) hotPivot = tile.getAttribute("data-location").split(",");
 
-          if (hotCompare[0] !== hotPivot[0] && hotCompare[1] !== hotPivot[1]) {
+          if (hotCompare[0] !== hotPivot[0] && hotCompare[1] !== hotPivot[1] && $("#board .hot").length) {
             playError();
             throw "(59) The letters you play must lie on the same row or column, and must be connected to each other";
           }
