@@ -44,6 +44,7 @@ function validate(gridState, firstTurn, wordsLogged, isPlayer) {
     !$(".column .hot").length ? isNot() : isHot();
     if (isPlayer) {
       if (firstTurn && !board[7][7].letter.trim()) {
+        if (!$("#board .hot").length) return isNot();
         playError();
         throw "(45) Your word must touch an existing word or the center star";
       }
@@ -57,7 +58,8 @@ function validate(gridState, firstTurn, wordsLogged, isPlayer) {
 
           if (index === 0) hotPivot = tile.getAttribute("data-location").split(",");
 
-          if (hotCompare[0] !== hotPivot[0] && hotCompare[1] !== hotPivot[1] && $("#board .hot").length) {
+          if (hotCompare[0] !== hotPivot[0] && hotCompare[1] !== hotPivot[1]) {
+            if (!$("#board .hot").length) return isNot();
             playError();
             throw "(59) The letters you play must lie on the same row or column, and must be connected to each other";
           }
@@ -123,6 +125,7 @@ function validate(gridState, firstTurn, wordsLogged, isPlayer) {
           let prev = line[index - 1] === " " || line[index - 1] === undefined ? true : false;
           let next = line[index + 1] === " " || line[index + 1] === undefined ? true : false;
           if (suspectId.includes(id) && id !== board[7][7].id.trim() && prev && next) {
+            if (!$("#board .hot").length) return isNot();
             playError();
             throw "(37) The letters you play must lie on the same row or column, and must be connected to each other";
           }
@@ -137,6 +140,7 @@ function validate(gridState, firstTurn, wordsLogged, isPlayer) {
       );
 
       if (ids.length == 2) {
+        if (!$("#board .hot").length) return isNot();
         playError();
         throw `138) Word must contain at least two letters`;
       }
@@ -150,6 +154,7 @@ function validate(gridState, firstTurn, wordsLogged, isPlayer) {
         if (bool.includes("falsetrue") || bool.includes("truefalse")) touching = true;
         if (_.without(hotLetters, "", "true").length > 1) {
           if (isPlayer) {
+            if (!$("#board .hot").length) return isNot();
             playError();
             throw "(47) The letters you play must lie on the same row or column, and must be connected to each other";
           } else {
@@ -166,6 +171,7 @@ function validate(gridState, firstTurn, wordsLogged, isPlayer) {
 
     if ((!touching && !firstTurn) || singleHot > 1) {
       if (isPlayer) {
+        if (!$("#board .hot").length) return isNot();
         playError();
         throw "(48) The letters you play must lie on the same row or column, and must be connected to each other";
       } else {
@@ -199,6 +205,7 @@ function validate(gridState, firstTurn, wordsLogged, isPlayer) {
             if (cell === true && prev) {
               coords = [];
               if (!skip && prev && next && isPlayer) {
+                if (!$("#board .hot").length) return isNot();
                 playError();
                 throw "(51) The letters you play must lie on the same row or column, and must be connected to each other";
               }
@@ -229,6 +236,7 @@ function validate(gridState, firstTurn, wordsLogged, isPlayer) {
             if (cell === true && prev) {
               zipCoords = [];
               if (!skip && prev && next && isPlayer) {
+                if (!$("#board .hot").length) return isNot();
                 playError();
                 throw "(52) The letters you play must lie on the same row or column, and must be connected to each other";
               }
@@ -281,6 +289,7 @@ function validate(gridState, firstTurn, wordsLogged, isPlayer) {
     if (isPlayer) {
       // console.log(hotLetters);
       if (_.without(hotLetters, "").length > potentialPoints.length + potentialZipPoints.length) {
+        if (!$("#board .hot").length) return isNot();
         playError();
         throw "(57) The letters you play must lie on the same row or column, and must be connected to each other";
       }
@@ -289,6 +298,7 @@ function validate(gridState, firstTurn, wordsLogged, isPlayer) {
     _.without(words, ...wordsLogged).forEach((word) => {
       if (!Trie().hasWord(word)) {
         if (isPlayer) {
+          if (!$("#board .hot").length) return isNot();
           playError();
           throw `290) The word: '${word}' is INVALID `;
         } else {
