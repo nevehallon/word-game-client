@@ -806,9 +806,11 @@ function showSettings() {
 
   $(".saveSettings").click(() => {
     localStorage.setItem("difficulty", +$("#difficulty").val());
+
     toggleModal({
       executeClose: true,
     });
+    e.stopImmediatePropagation();
   });
 }
 
