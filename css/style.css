@@ -6,9 +6,20 @@
 }
 
 html {
+  background-image: url(https://cdn.pixabay.com/photo/2014/10/04/16/55/wood-cube-473703_960_720.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+}
+
+body {
   width: max-content;
   margin: 0 auto;
   touch-action: manipulation;
+  box-shadow: #946f00b0 0 0 20px 50vw;
+  background-color: #946f00b0;
+  min-height: 100%;
 }
 
 div#frame::-webkit-scrollbar {
@@ -16,6 +27,9 @@ div#frame::-webkit-scrollbar {
 }
 
 div#frame {
+  box-shadow: 0 0 20px 0px;
+  background-color: black;
+  border-radius: 5px;
   max-width: 415px;
   width: 415px;
   margin: auto;
@@ -36,6 +50,7 @@ div#board {
   justify-content: center;
 }
 div#board div.column {
+  background-color: honeydew;
   position: relative;
   border: 1px solid black;
   border-radius: 5px;
