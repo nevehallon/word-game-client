@@ -22,6 +22,7 @@ div#frame::-webkit-scrollbar {
 
 div#frame {
   max-width: 415px;
+  width: 415px;
   margin: auto;
   overflow: scroll;
   height: 412.5px;
