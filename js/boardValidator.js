@@ -20,19 +20,23 @@ function push2Zip(point, multi, index) {
   zipWordMultiplier[index].push(multi);
 }
 function isHot() {
-  $("#passPlay").text("Play").attr("class", "btn btn-primary");
+  $("#passPlay").html("Play").attr("class", "btn btn-primary");
   $("#swapRecall").text("Recall");
 }
 
 function isNot() {
-  $("#passPlay").text("Pass").attr("class", "btn btn-primary");
+  $("#passPlay").html("Pass").attr("class", "btn btn-primary");
   $("#swapRecall").text("Swap");
 }
 
 function playError() {
   setTimeout(() => {
     if ($("#passPlay").text() === "Pass") return;
-    $("#passPlay").text("Play X").attr("class", "btn btn-danger");
+    $("#passPlay")
+      .html(
+        "Play <svg data-src='https://s.svgbox.net/materialui.svg?ic=block' width='32' height='32' fill='currentColor'></svg>"
+      )
+      .attr("class", "btn btn-danger");
   }, 0);
 }
 
