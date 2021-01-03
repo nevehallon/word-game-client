@@ -9,10 +9,6 @@ html {
   margin: 0 auto;
   touch-action: manipulation;
 }
-body {
-  position: absolute;
-  left: calc(50% - 207.5px);
-}
 // .stop-scrolling {
 //   position: fixed;
 //   margin-top: 0; // override by JS to use acc to curr $(window).scrollTop()
@@ -94,7 +90,7 @@ div#board {
 }
 
 div#outer_rack {
-  height: 85px;
+  height: 80px;
   img {
     width: 412px;
   }
@@ -178,7 +174,7 @@ div#actionBar {
   width: 415px;
   margin: auto;
   button {
-    margin: 8px 10px;
+    margin: 5px;
   }
 }
 
