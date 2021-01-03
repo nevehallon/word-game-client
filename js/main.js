@@ -532,13 +532,15 @@ function prePass(wasClicked, isSwap, isAI, legalClick) {
     timeout: 0,
     executeClose: false,
   });
-  $(".doPass").click((e) => {
-    toggleModal({
-      executeClose: true,
+  $(".doPass")
+    .off("click")
+    .click((e) => {
+      toggleModal({
+        executeClose: true,
+      });
+      pass(wasClicked, isSwap, isAI, legalClick);
+      e.stopImmediatePropagation();
     });
-    pass(wasClicked, isSwap, isAI, legalClick);
-    e.stopImmediatePropagation();
-  });
 }
 
 function play(isAI = false) {
@@ -804,14 +806,16 @@ function showSettings() {
     .attr("class", rangeValues[convertVal(+$("#difficulty").val())].class);
   giveFeedBack();
 
-  $(".saveSettings").click(() => {
-    localStorage.setItem("difficulty", +$("#difficulty").val());
+  $(".saveSettings")
+    .off("click")
+    .click(() => {
+      localStorage.setItem("difficulty", +$("#difficulty").val());
 
-    toggleModal({
-      executeClose: true,
+      toggleModal({
+        executeClose: true,
+      });
+      e.stopImmediatePropagation();
     });
-    e.stopImmediatePropagation();
-  });
 }
 
 $("#bagBtn").click(showBagContent);
