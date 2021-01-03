@@ -22,14 +22,14 @@ function push2Zip(point, multi, index) {
 function isHot() {
   $("#passPlay").html("Play").attr("class", "btn btn-primary");
   $("#swapRecall").html(
-    'Recall <svg data-src="https://s.svgbox.net/materialui.svg?ic=done" width="32" height="32" fill="currentColor"></svg>'
+    'Recall <svg data-src="https://s.svgbox.net/materialui.svg?ic=undo" width="25" height="25" fill="currentColor"></svg>'
   );
 }
 
 function isNot() {
   $("#passPlay").html("Pass").attr("class", "btn btn-primary");
   $("#swapRecall").html(
-    'Swap <svg data-src="https://s.svgbox.net/materialui.svg?ic=swap_vertical_circle" width="32" height="32" fill="currentColor"></svg>'
+    'Swap <svg data-src="https://s.svgbox.net/materialui.svg?ic=swap_vertical_circle" width="25" height="25" fill="currentColor"></svg>'
   );
 }
 
@@ -38,7 +38,7 @@ function playError() {
     if ($("#passPlay").text() === "Pass") return;
     $("#passPlay")
       .html(
-        "Play <svg data-src='https://s.svgbox.net/materialui.svg?ic=block' width='32' height='32' fill='currentColor'></svg>"
+        "Play <svg data-src='https://s.svgbox.net/materialui.svg?ic=block' width='25' height='25' fill='currentColor'></svg>"
       )
       .attr("class", "btn btn-danger");
   }, 0);
