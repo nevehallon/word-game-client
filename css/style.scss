@@ -4,7 +4,9 @@
   box-sizing: border-box;
   user-select: none;
 }
-
+html {
+  width: max-content;
+}
 .stop-scrolling {
   position: fixed;
   margin-top: 0; // override by JS to use acc to curr $(window).scrollTop()

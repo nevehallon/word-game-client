@@ -5,6 +5,10 @@
   user-select: none;
 }
 
+html {
+  width: max-content;
+}
+
 .stop-scrolling {
   position: fixed;
   margin-top: 0;
