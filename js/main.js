@@ -196,6 +196,12 @@ function zoomIn(elm) {
       setTimeout(() => {
         $("body").removeClass("stop-scrolling");
       }, 500);
+    } else {
+      $("body").addClass("stop-scrolling");
+      $('[data-location="7,7"]')[0].scrollIntoView({ block: "center", inline: "center" });
+      setTimeout(() => {
+        $("body").removeClass("stop-scrolling");
+      }, 500);
     }
   }
 }
