@@ -196,12 +196,6 @@ function zoomIn(elm) {
       setTimeout(() => {
         $("body").removeClass("stop-scrolling");
       }, 500);
-    } else {
-      $("body").addClass("stop-scrolling");
-      $('[data-location="7,7"]')[0].scrollIntoView({ block: "center", inline: "center" });
-      setTimeout(() => {
-        $("body").removeClass("stop-scrolling");
-      }, 500);
     }
   }
 }
@@ -827,7 +821,7 @@ $("#settingsBtn").click(showSettings);
 
 $("#startGame").click(rematch);
 $("#zoomOut").click(zoomOut);
-$("#zoomIn").click(zoomIn);
+$("#zoomIn").click(()=>zoomIn($('[data-location="7,7"]')[0]);
 $("#board .column").dblclick((e) => (isZoomed ? zoomOut() : zoomIn(e.target)));
 
 function setDraggable(x) {

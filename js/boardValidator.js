@@ -21,12 +21,16 @@ function push2Zip(point, multi, index) {
 }
 function isHot() {
   $("#passPlay").html("Play").attr("class", "btn btn-primary");
-  $("#swapRecall").text("Recall");
+  $("#swapRecall").html(
+    'Recall <svg data-src="https://s.svgbox.net/materialui.svg?ic=done" width="32" height="32" fill="currentColor"></svg>'
+  );
 }
 
 function isNot() {
   $("#passPlay").html("Pass").attr("class", "btn btn-primary");
-  $("#swapRecall").text("Swap");
+  $("#swapRecall").html(
+    'Swap <svg data-src="https://s.svgbox.net/materialui.svg?ic=swap_vertical_circle" width="32" height="32" fill="currentColor"></svg>'
+  );
 }
 
 function playError() {
