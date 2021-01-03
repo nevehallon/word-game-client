@@ -6,7 +6,7 @@
 }
 html {
   width: max-content;
-  margin: auto;
+  margin: 0 auto;
 }
 .stop-scrolling {
   margin-top: 0; // override by JS to use acc to curr $(window).scrollTop()
