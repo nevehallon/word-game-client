@@ -815,8 +815,10 @@ function showSettings() {
 $("#bagBtn").click(showBagContent);
 $("#scoresBtn").click(showScoreHistory);
 $("#mix").click(() => ($("#rack .tile").length > 1 ? mix() : undefined));
-$("#swapRecall").click(() => ($("#swapRecall").text() == "Swap" ? swap() : recall()));
-$("#passPlay").click(() => ($("#passPlay").text() === "Pass" ? prePass(true, false, false, playersTurn) : play()));
+$("#swapRecall").click(() => ($("#swapRecall").text().includes("Swap") ? swap() : recall()));
+$("#passPlay").click(() =>
+  $("#passPlay").text().includes("Pass") ? prePass(true, false, false, playersTurn) : play()
+);
 $("#settingsBtn").click(showSettings);
 
 $("#startGame").click(rematch);
