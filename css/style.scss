@@ -9,7 +9,6 @@ html {
   margin: auto;
 }
 .stop-scrolling {
-  position: fixed;
   margin-top: 0; // override by JS to use acc to curr $(window).scrollTop()
   width: 100%;
 }
