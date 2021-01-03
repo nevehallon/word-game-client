@@ -191,10 +191,10 @@ function zoomIn(elm) {
     bigTile($("#board .tile"));
     isZoomed = true;
     if (elm) {
-      $("body").addClass("stop-scrolling");
+      // $("body").addClass("stop-scrolling");
       elm.scrollIntoView({ block: "center", inline: "center" });
       setTimeout(() => {
-        $("body").removeClass("stop-scrolling");
+        // $("body").removeClass("stop-scrolling");
       }, 500);
     }
   }
@@ -768,10 +768,10 @@ function handleBlank(blank) {
     blank.removeClass("blank");
     blank.addClass("setBlank");
 
-    $("body").addClass("stop-scrolling");
+    // $("body").addClass("stop-scrolling");
     blank[0].scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
     setTimeout(() => {
-      $("body").removeClass("stop-scrolling");
+      // $("body").removeClass("stop-scrolling");
     }, 500);
 
     toggleModal({
@@ -824,7 +824,10 @@ $("#settingsBtn").click(showSettings);
 $("#startGame").click(rematch);
 $("#zoomOut").click(zoomOut);
 $("#zoomIn").click(() => zoomIn($('[data-location="7,7"]')[0]));
-$("#board .column").dblclick((e) => (isZoomed ? zoomOut() : zoomIn(e.target)));
+$("#board .column").dblclick((e) => {
+  e.preventDefault();
+  isZoomed ? zoomOut() : zoomIn(e.target);
+});
 
 function setDraggable(x) {
   x.draggable({
@@ -906,10 +909,10 @@ $(".column").droppable({
     });
 
     zoomIn();
-    $("body").addClass("stop-scrolling");
+    // $("body").addClass("stop-scrolling");
     tileClone[0].scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
     setTimeout(() => {
-      $("body").removeClass("stop-scrolling");
+      // $("body").removeClass("stop-scrolling");
     }, 500);
   },
 });
