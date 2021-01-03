@@ -821,6 +821,7 @@ $("#settingsBtn").click(showSettings);
 
 $("#startGame").click(rematch);
 $("#zoomOut").click(zoomOut);
+$("#zoomIn").click(zoomIn);
 $("#board .column").dblclick((e) => (isZoomed ? zoomOut() : zoomIn(e.target)));
 
 function setDraggable(x) {

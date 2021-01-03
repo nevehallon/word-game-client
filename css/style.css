@@ -8,6 +8,7 @@
 html {
   width: max-content;
   margin: 0 auto;
+  touch-action: manipulation;
 }
 
 .stop-scrolling {
