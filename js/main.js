@@ -827,8 +827,8 @@ $("#startGame").click(rematch);
 $("#zoomOut").click(zoomOut);
 $("#zoomIn").click(() => zoomIn($('[data-location="7,7"]')[0]));
 $("#board .column").dblclick((e) => {
-  e.stopImmediatePropagation();
   isZoomed ? zoomOut() : zoomIn(e.target);
+  e.stopImmediatePropagation();
 });
 
 function setDraggable(x) {
