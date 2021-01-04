@@ -221,7 +221,7 @@ let serverCheck = async () => {
     toggleModal({
       modal: { class: "", content: "" },
       modalPlacer: { class: "modal-dialog-centered", content: "" },
-      title: { class: "", content: "Loading Resource..." },
+      title: { class: "", content: "Loading Resources..." },
       body: {
         class: "text-center",
         content: `<div class="spinner-container my-2"><svg class="spinner" data-src="https://s.svgbox.net/loaders.svg?ic=circles" fill="currentColor"></svg></div>`,
