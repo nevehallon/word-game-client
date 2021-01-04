@@ -214,10 +214,29 @@ function zoomOut() {
   smallTile($("#board .tile"));
   isZoomed = false;
 }
-
+let loaderShown = false;
 let serverCheck = async () => {
+  if (!loaderShown) {
+    loaderShown = true;
+    toggleModal({
+      modal: { class: "", content: "" },
+      modalPlacer: { class: "modal-dialog-centered", content: "" },
+      title: { class: "", content: "Loading Resource..." },
+      body: {
+        class: "text-center",
+        content: `<div class="spinner-container my-2"><svg class="spinner" data-src="https://s.svgbox.net/loaders.svg?ic=circles" fill="currentColor"></svg></div>`,
+      },
+      footer: { class: "d-none", content: "" },
+      actionButton: { class: "", content: "" },
+      timeout: 0,
+      executeClose: false,
+    });
+  }
   let status = await checkServerStatus();
   if (status) {
+    toggleModal({
+      executeClose: true,
+    });
     return startGame();
   }
   setTimeout(() => {
