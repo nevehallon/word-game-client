@@ -17,6 +17,8 @@ import validate from "./boardValidator.js";
 // ?  temp1.forEach((x,i) => console.log(trie().hasWord(x), i))
 // window.toggleModal = toggleModal; //? uncomment to let method be available in console
 
+const DEBUG_MODE = false; //? change to true for the AI to play it self
+
 let playerScore = 0;
 let computerScore = 0;
 let lettersUsed = 0;
@@ -30,8 +32,7 @@ let playersTurn = false;
 let wordsLogged = [];
 let history = [];
 let rivalRack = [];
-
-const debugging = false; //? change to true for the AI to play it self
+let hints = JSON.parse(localStorage.getItem("hints")) || { show: true };
 
 let bag = _.shuffle(_.shuffle(letters));
 // bag = _.drop(bag, 86); //? uncomment for doing tests on a shorter game
@@ -40,10 +41,32 @@ updateGameState();
 getWordTrieStr();
 
 // getWordValues(); //? use in case that you want to sort sub-anas by score descending
+if (hints.show) {
+  $('[data-toggle="tooltip"]')
+    .tooltip({
+      trigger: "hover",
+    })
+    .on("click", function () {
+      $(this).tooltip("hide");
+    });
+
+  let arr = $('[data-toggle="tooltip"]').toArray();
+
+  for (let i = 0; i <= arr.length; i++) {
+    setTimeout(function () {
+      $(arr[i - 1]).tooltip("hide");
+      $(arr[i]).tooltip("show");
+    }, i * 4000);
+  }
+}
+
+function setModalOptions(backdrop, keyboard) {
+  $("#modal").data("bs.modal")._config.backdrop = backdrop;
+  $("#modal").data("bs.modal")._config.keyboard = keyboard;
+}
 
 function deal2Player() {
   for (let i = 0; i < 7; i++) {
-    // let { letter, points } = { letter: "", points: 0 }; //? uncomment to test player turn with blank tiles
     let { letter, points } = _.pullAt(bag, [0])[0];
     $(`#rack`).append(`
         <div data-drag=${i} class="tile hot ${points ? "" : "blank"}">${letter}<div>${points ? points : ""}</div></div>
@@ -97,7 +120,7 @@ function startGame() {
     deal2PC();
     playersTurn = true;
     alertStarter("You won the draw and will start");
-    if (debugging) {
+    if (DEBUG_MODE) {
       playersTurn = true;
       pcPlay();
     }
@@ -221,22 +244,24 @@ let serverCheck = async () => {
     toggleModal({
       modal: { class: "", content: "" },
       modalPlacer: { class: "modal-dialog-centered", content: "" },
-      title: { class: "", content: "Loading Resources..." },
+      modalHeader: { class: "d-none", content: "" },
       body: {
         class: "text-center",
-        content: `<div class="spinner-container my-2"><svg class="spinner" data-src="https://s.svgbox.net/loaders.svg?ic=circles" fill="currentColor"></svg></div>`,
+        content: `<h4 class="mb-2">Loading Resources...</h4><div class="spinner-container my-2"><svg class="spinner" data-src="https://s.svgbox.net/loaders.svg?ic=circles" fill="currentColor"></svg></div>`,
       },
       footer: { class: "d-none", content: "" },
       actionButton: { class: "", content: "" },
       timeout: 0,
       executeClose: false,
     });
+    setModalOptions("static", false); //prevents user from closing modal
   }
   let status = await checkServerStatus();
   if (status) {
     toggleModal({
       executeClose: true,
     });
+    setModalOptions(true, true);
     return startGame();
   }
   setTimeout(() => {
@@ -312,7 +337,7 @@ function pcPlay() {
       // prettier-ignore
       !isValidMove && rivalRack.length && bag.length ? 
       pcSwap() : isValidMove ? 
-      play(true) : debugging ? 
+      play(true) : DEBUG_MODE ? 
       false : pass(true, false, true);
     } catch (error) {
       if (error?.message?.includes("ranch")) {
@@ -328,8 +353,8 @@ function pcPlay() {
 function endGame() {
   zoomOut();
   $("#startGame")[0].removeAttribute("disabled");
-  $("#startGame").show();
-  $("#actionBar .btn").not("#scoresBtn, #startGame").css({ "pointer-events": "none" }); //?prevent players from continuing (can still see the score history, and shows a button for a rematch)
+  $("#startGame").removeClass("d-none").show();
+  $("#actionBar .btn").not("#scoresBtn, #startGame").css({ "pointer-events": "none", display: "none" }); //?prevent players from continuing (can still see the score history, and shows a button for a rematch)
 
   $("#board .hot").removeClass(["hot"]).parent().removeClass(["dw", "tw", "dl", "tl"]); //?remove hot tiles from board
 
@@ -387,10 +412,10 @@ function endGame() {
     toggleModal({
       modal: { class: "text-center", content: "" },
       modalPlacer: { class: "modal-dialog-centered", content: "" },
-      title: { class: "", content: `${winner} Won, Good Game` },
+      modalHeader: { class: "d-none", content: `` },
       body: {
         class: "",
-        content: `<div class="text-primary font-weight-bold">Player: ${playerScore}</div><div class="text-danger font-weight-bold">Opponent: ${computerScore}</div>`,
+        content: `<h4 class="mb-2">${winner} Won, Good Game</h4><div class="text-primary font-weight-bold">Player: ${playerScore}</div><div class="text-danger font-weight-bold">Opponent: ${computerScore}</div>`,
       },
       footer: { class: "", content: "" },
       actionButton: { class: "rematch", content: "Rematch" },
@@ -412,10 +437,6 @@ function swap() {
     modal: { class: "text-center", content: "" },
     modalPlacer: { class: "modal-dialog-centered", content: "" },
     modalHeader: { class: "d-none", content: "" },
-    title: {
-      class: "",
-      content: "",
-    },
     body: {
       class: "mh-100",
       content:
@@ -531,20 +552,20 @@ function pass(wasClicked = false, isSwap, isAI, legalClick) {
   //    end game
   if (passCount === 4) return endGame();
   //    allow next turn
-  // if (debugging) firstTurn = false;
+  // if (DEBUG_MODE) firstTurn = false;
   setTimeout(() => {
     if (playersTurn) $("#board .tile").removeClass("pcPlay");
 
-    playersTurn || debugging ? pcPlay() : (playersTurn = true);
+    playersTurn || DEBUG_MODE ? pcPlay() : (playersTurn = true);
   }, 250);
 }
 
 function prePass(wasClicked, isSwap, isAI, legalClick) {
   if (legalClick === false) return;
   toggleModal({
-    modal: { class: "", content: "" },
+    modal: { class: "text-center", content: "" },
     modalPlacer: { class: "modal-dialog-centered", content: "" },
-    title: { class: "d-none", content: "" },
+    modalHeader: { class: "d-none", content: "" },
     body: { class: "", content: "Are you sure you want to pass?" },
     footer: { class: "", content: "" },
     actionButton: { class: "doPass", content: "Confirm" },
@@ -563,7 +584,7 @@ function prePass(wasClicked, isSwap, isAI, legalClick) {
 }
 
 function play(isAI = false) {
-  if (!isValidMove.words && debugging) playersTurn = true;
+  if (!isValidMove.words && DEBUG_MODE) playersTurn = true;
   if (!isValidMove.words) {
     return toggleModal({
       modal: { class: "", content: "" },
@@ -586,7 +607,12 @@ function play(isAI = false) {
     $("#pcScore").text(computerScore);
     history.push({
       isAI: true,
-      word: isValidMove.wordsPlayed.join(", "),
+      word: isValidMove.wordsPlayed
+        .map((x) => {
+          let word = x[0].toUpperCase() + x.slice(1).toLowerCase();
+          return `<a title="See definition for: ${word}" class="text-danger" href="https://www.yourdictionary.com/${x.toLowerCase()}" target="_blank">${word}</a>`;
+        })
+        .join(", "),
       points: isValidMove.pointTally,
       score: { computerScore, playerScore },
       skip: false,
@@ -602,7 +628,12 @@ function play(isAI = false) {
 
     history.push({
       isAI: false,
-      word: isValidMove.bestWord.join(", "),
+      word: isValidMove.bestWord
+        .map((x) => {
+          let word = x[0].toUpperCase() + x.slice(1).toLowerCase();
+          return `<a title="See definition for: ${word}" href="https://www.yourdictionary.com/${x.toLowerCase()}" target="_blank">${word}</a>`;
+        })
+        .join(", "),
       points: isValidMove.pointTally,
       score: { computerScore, playerScore },
       skip: false,
@@ -728,7 +759,12 @@ function showScoreHistory() {
     modalPlacer: { class: "modal-dialog-centered", content: "" },
     modalHeader: { class: "d-none", content: "" },
     title: { class: "", content: `` },
-    body: { class: "", content: generateTable(history) },
+    body: {
+      class: "",
+      content:
+        generateTable(history) +
+        "<div class='text-info font-weight-bolder'><u>* Click on word to see definition *</u></div>",
+    },
     footer: { class: "justify-content-center", content: "" },
     actionButton: { class: "d-none", content: "" },
     timeout: 0,
@@ -738,12 +774,6 @@ function showScoreHistory() {
     return this.scrollHeight;
   });
   //show list of moves. who played what and how many points were earned
-}
-
-function setModalOptions(backdrop, keyboard) {
-  console.log("works");
-  $("#modal").data("bs.modal")._config.backdrop = backdrop;
-  $("#modal").data("bs.modal")._config.keyboard = keyboard;
 }
 
 function handleBlank(blank) {
@@ -789,11 +819,7 @@ function handleBlank(blank) {
     blank.removeClass("blank");
     blank.addClass("setBlank");
 
-    // $("body").addClass("stop-scrolling");
     blank[0].scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
-    setTimeout(() => {
-      // $("body").removeClass("stop-scrolling");
-    }, 500);
 
     toggleModal({
       executeClose: true,
@@ -827,8 +853,9 @@ function showSettings() {
 
   $(".saveSettings")
     .off("click")
-    .click(() => {
+    .click((e) => {
       localStorage.setItem("difficulty", +$("#difficulty").val());
+      localStorage.setItem("hints", `{"show": ${$("#showHints")[0].checked}}`);
 
       toggleModal({
         executeClose: true,
