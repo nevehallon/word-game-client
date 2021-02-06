@@ -18,6 +18,10 @@ import validate from "./boardValidator.js";
 // window.toggleModal = toggleModal; //? uncomment to let method be available in console
 
 const DEBUG_MODE = false; //? change to true for the AI to play it self
+const REDIRECT = false;
+const NEW_HOST_URL = "https://nevehallon.github.io/";
+
+if (REDIRECT) window.location.replace(NEW_HOST_URL);
 
 let playerScore = 0;
 let computerScore = 0;
