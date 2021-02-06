@@ -19,7 +19,7 @@ import validate from "./boardValidator.js";
 
 const DEBUG_MODE = false; //? change to true for the AI to play it self
 const REDIRECT = false;
-const NEW_HOST_URL = "https://nevehallon.github.io/";
+const NEW_HOST_URL = "https://nevehallon.github.io/word-game-client";
 
 if (REDIRECT) window.location.replace(NEW_HOST_URL);
 
